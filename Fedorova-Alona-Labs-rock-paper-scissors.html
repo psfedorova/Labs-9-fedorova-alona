@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="mb-4 text-left">"Rock Paper Scissors"</h1>
+    
+        <div class="text-left">
+            <button class="btn btn-primary" onclick="playGame()">Play</button>
+        </div>
+
+        <div class="text-left" id="output"></div>
+
+        <script>
+            function playGame() {
+                const out = document.getElementById("output");
+                out.innerHTML = "";
+
+                const options = ["rock", "paper", "scissors"];
+
+                let userWin = false;
+
+                for (let round = 1; round <= 3; round++) {
+                    if (userWin) {
+                        break;
+                    }
+
+                    const computerChoice = options[Math.floor(Math.random() * 3)];
+
+                    let userChoice = prompt(
+                        "Round " + round + ": Choose rock, paper or scissors"
+                    );
+
+                    if (userChoice === null) {
+                        out.innerHTML += "<br>You cancelled the game.<br>";
+                        break;
+                    }
+
+                    userChoice = userChoice.toLowerCase();
+
+                    if (
+                        userChoice !== "rock" &&
+                        userChoice !== "paper" &&
+                        userChoice !== "scissors"
+                    ) {
+                        out.innerHTML += "<br>Invalid choice: " + userChoice + "<br><br>";
+                    } else {
+                        let result = "";
+
+                        if (userChoice === computerChoice) {
+                            result = "Tie!";
+                        } else if (
+                            (userChoice === "rock" && computerChoice === "scissors") ||
+                            (userChoice === "paper" && computerChoice === "rock") ||
+                            (userChoice === "scissors" && computerChoice === "paper")
+                        ) {
+                            result = "You win!";
+                            userWin = true;
+                        } else {
+                            result = "Computer wins!";
+                        }
+
+                        out.innerHTML +=
+                            "<br>Round " + round +
+                            "<br>You chose: " + userChoice +
+                            "<br>Computer chose: " + computerChoice +
+                            "<br><strong>" + result + "</strong><br><br>";
+                    }
+                }
+
+                if (userWin) {
+                    out.innerHTML += "<strong>You Win! Game over</strong>";
+                } else {
+                    out.innerHTML += "<strong>Game over - 3 rounds completed</strong>";
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
